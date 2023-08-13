@@ -1,10 +1,11 @@
-import { Button } from "@/components/ui/button";
+import SignInComp from "@/components/SignInComp";
 
 export default function Home() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <div>hellow world</div>
-      <Button variant={"destructive"}>Click Me</Button>
+    <main className="grid min-h-screen place-items-center p-4">
+      <div className="flex w-full items-center justify-center">
+        <SignInComp />
+      </div>
     </main>
   );
 }

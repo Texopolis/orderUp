@@ -1,7 +1,8 @@
-import "./globals.css";
+import UserButtonComp from "@/components/UserButtonComp";
+import "../globals.css";
 import type { Metadata } from "next";
 import { Rubik } from "next/font/google";
-import { ClerkProvider } from "@clerk/nextjs";
+import MenuBarComp from "@/components/MenuBarComp";
 
 const rubik = Rubik({ subsets: ["latin"], weight: ["400", "600", "800"] });
 
@@ -16,10 +17,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <ClerkProvider>
-      <html lang="en" className="dark">
-        <body className={rubik.className}>{children}</body>
-      </html>
-    </ClerkProvider>
+    <html lang="en" className="dark">
+      <body className={rubik.className}>
+        <MenuBarComp />
+        {children}
+      </body>
+    </html>
   );
 }
