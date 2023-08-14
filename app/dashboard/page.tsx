@@ -1,14 +1,23 @@
-import React from 'react'
-import { Menubar } from '@/components/ui/menubar'
+import React from "react";
+import { Menubar } from "@/components/ui/menubar";
+import { Button } from "@/components/ui/button";
+import { DatePickerComp } from "@/components/DatePickerComp";
+import { format } from "date-fns";
+import Link from "next/link";
 
-type Props = {}
+function page() {
+  const today = Date.now();
 
-function page({}: Props) {
   return (
-      <div>
-          DASHBOAD
+    <div className="flex flex-col">
+      <div>Cooks</div>
+      <Link href={`/${new Date()}`}>
+        go to today&apos;s order
+      </Link>
+      <DatePickerComp />
+      <div>Today is: {format(today, "PPP")}</div>
     </div>
-  )
+  );
 }
 
-export default page
+export default page;
