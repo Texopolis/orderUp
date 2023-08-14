@@ -10,9 +10,27 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model Master {
+  id    Int    @id @default(autoincrement())
+  items Item[]
+}
 
-model User {
-  id    Int     @id @default(autoincrement())
-  email String  @unique
-  name  String?
+model Item {
+  id       Int     @id @default(autoincrement())
+  name     String
+  Master   Master? @relation(fields: [masterId], references: [id])
+  masterId Int?
+}
+
+model Daily {
+  id    Int        @id @default(autoincrement())
+  items ListItem[]
+}
+
+model ListItem {
+  id      Int    @id @default(autoincrement())
+  name    String
+  amount  String
+  Daily   Daily? @relation(fields: [dailyId], references: [id])
+  dailyId Int?
 }
