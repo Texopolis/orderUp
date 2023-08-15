@@ -34,12 +34,14 @@ async function page({ params }: Props) {
   return (
     <div>
       <div>Page: {date}</div>
-      <section>Add new:</section>
-      <section className="grid grid-cols-3 gap-4">
-        <MasterListItemComp name="Add New" add={true} />
-        {master?.items.map((item, i) => {
-          return <MasterListItemComp key={i} name={item} />;
-        })}
+      <section>
+        <div>Currently Used Items</div>
+        <div className="grid grid-cols-3 gap-4">
+          <MasterListItemComp name="Add New" add={true} />
+          {master?.items.map((item, i) => {
+            return <MasterListItemComp key={i} name={item} />;
+          })}
+        </div>
       </section>
     </div>
   );
