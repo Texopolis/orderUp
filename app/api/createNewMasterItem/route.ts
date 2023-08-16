@@ -8,7 +8,7 @@ export async function POST(req: NextRequest) {
   async function createNewMasterItem() {
     try {
       const prismaRes = await prisma.master.update({
-        where: { id: 0 },
+        where: { id: "MASTER" },
         data: {
           items: { push: newItem },
         },
