@@ -37,7 +37,7 @@ function MasterListAddItemComp() {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger>
-        <Button className={"bg-green-400"}>Add New Item</Button>
+        <Button className="bg-secondary">Add New Item</Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>

@@ -15,7 +15,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className="dark">
-      <body>{children}</body>
+      <body>
+        <div className="h-screen">{children}</div>
+      </body>
     </html>
   );
 }

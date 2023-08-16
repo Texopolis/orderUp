@@ -1,52 +1,72 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import { Button } from "./ui/button";
-import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "./ui/dialog";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "./ui/dialog";
 import { Label } from "./ui/label";
 import { Input } from "./ui/input";
+import { useRouter } from "next/navigation";
 
-type Props = { name: string; add?: boolean };
+type Props = { name: string; date: string };
 
-function MasterListItemComp({ name, add }: Props) {
-  function handleClick(e: React.SyntheticEvent<HTMLButtonElement>) {
-    if (e.currentTarget.innerHTML == "Add New") {
-      console.log(e.currentTarget.innerHTML);
-    } else {
-      console.log("ELSE");
-      return "HI";
+function MasterListItemComp({ name, date }: Props) {
+  const [open, setOpen] = useState(false);
+  const [amount, setAmount] = useState("");
+  const router = useRouter();
+
+  async function handleSubmit() {
+    try {
+      const res = await fetch("/api/addItemToOrder", {
+        method: "POST",
+        body: JSON.stringify({ date:date, name: name, amount: amount }),
+      });
+      if (res.status == 200) {
+        setOpen(false);
+        router.refresh();
+      }
+    } catch (error) {
+      console.error(error);
     }
   }
 
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger>
-        <Button onClick={handleClick} className={add ? `bg-green-400` : ""}>
-          {name}
-        </Button>
+        <Button>{name}</Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle>Edit profile</DialogTitle>
+          <DialogTitle>Add item to order</DialogTitle>
           <DialogDescription>
-            Make changes to your profile here. Click save when you&apos`re done.
+            Add this item to today&apos;s order
           </DialogDescription>
         </DialogHeader>
         <div className="grid gap-4 py-4">
           <div className="grid grid-cols-4 items-center gap-4">
-            <Label htmlFor="name" className="text-right">
-              Name
+            <Label htmlFor="amount" className="text-right">
+              Amount
             </Label>
-            <Input id="name" value="Pedro Duarte" className="col-span-3" />
-          </div>
-          <div className="grid grid-cols-4 items-center gap-4">
-            <Label htmlFor="username" className="text-right">
-              Username
-            </Label>
-            <Input id="username" value="@peduarte" className="col-span-3" />
+            <Input
+              id="amount"
+              value={amount}
+              onChange={(e) => {
+                setAmount(e.target.value);
+              }}
+              className="col-span-3"
+            />
           </div>
         </div>
         <DialogFooter>
-          <Button type="submit">Save changes</Button>
+          <Button type="submit" onClick={handleSubmit}>
+            Save changes
+          </Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>

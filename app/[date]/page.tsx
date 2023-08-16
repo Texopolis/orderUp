@@ -8,7 +8,21 @@ type Props = { params: { date: string } };
 
 async function page({ params }: Props) {
   const prisma = new PrismaClient();
-  const getMaster = cache(async function () {
+
+  async function getDaily() {
+    try {
+      return await prisma.listItem.findMany({
+        where: { dailyId: params.date },
+      });
+    } catch (e) {
+      console.error(e);
+      process.exit(1);
+    } finally {
+      await prisma.$disconnect();
+    }
+  }
+
+  async function getMaster() {
     try {
       return await prisma.master.findUnique({
         where: { id: 0 },
@@ -19,10 +33,11 @@ async function page({ params }: Props) {
     } finally {
       await prisma.$disconnect();
     }
-  });
+  }
 
+  const daily = await getDaily();
   const master = await getMaster();
-  console.log(master?.items);
+  console.log(daily)
 
   function formatDateString(date: string) {
     const decodedString = decodeURIComponent(date);
@@ -33,14 +48,29 @@ async function page({ params }: Props) {
   const date = format(formatDateString(params.date), "PPP");
 
   return (
-    <div>
-      <div>Page: {date}</div>
+    <div className="flex h-full flex-col justify-between p-6">
+      <div className="text-2xl">Order for: {date}</div>
       <section>
-        <div>Currently Used Items</div>
-        <div className="grid grid-cols-3 gap-4">
+        <div>Current Order:</div>
+        <div>
+          {daily.map((item, i) => {
+            return (
+              <div key={i}>
+                <div>{item.name}</div>
+                <div>{item.amount}</div>
+              </div>
+            );
+          })}
+        </div>
+      </section>
+      <section className="justify-center text-center align-middle">
+        <div className="text-2xl text-blue-400">Currently Used Items</div>
+        <div className="grid grid-cols-4 gap-2">
           <MasterListAddItemComp />
           {master?.items.map((item, i) => {
-            return <MasterListItemComp key={i} name={item} />;
+            return (
+              <MasterListItemComp key={i} date={params.date} name={item} />
+            );
           })}
         </div>
       </section>
