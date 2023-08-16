@@ -8,7 +8,7 @@ datasource db {
 }
 
 model Master {
-  id    Int      @id @unique @default(0)
+  id    String      @id @unique @default("MASTER")
   items String[]
 }
 

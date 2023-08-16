@@ -27,7 +27,7 @@ async function page({ params }: Props) {
   async function getMaster() {
     try {
       return await prisma.master.findUnique({
-        where: { id: 0 },
+        where: { id: "MASTER" },
       });
     } catch (e) {
       console.error(e);
