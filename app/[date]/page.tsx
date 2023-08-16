@@ -12,8 +12,9 @@ async function page({ params }: Props) {
 
   async function getDaily() {
     try {
-      return await prisma.listItem.findMany({
-        where: { dailyId: params.date },
+      return await prisma.daily.findUnique({
+        where: { id: params.date },
+        select: { items: true },
       });
     } catch (e) {
       console.error(e);
@@ -54,7 +55,7 @@ async function page({ params }: Props) {
       <section>
         <div>Current Order:</div>
         <div className="flex flex-col">
-          {daily.map((item, i) => {
+          {daily?.items.map((item, i) => {
             return (
               <ListItemComp key={i} name={item.name} amount={item.amount} />
             );
