@@ -1,4 +1,4 @@
-import React, { cache } from "react";
+import React from "react";
 import { format } from "date-fns";
 import { PrismaClient } from "@prisma/client";
 import MasterListItemComp from "@/components/MasterListItemComp";
