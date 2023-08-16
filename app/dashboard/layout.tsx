@@ -19,8 +19,10 @@ export default function RootLayout({
   return (
     <html lang="en" className="dark">
       <body className={rubik.className}>
-        <MenuBarComp />
-        {children}
+        <div className="flex flex-col h-screen">
+          <MenuBarComp />
+          {children}
+        </div>
       </body>
     </html>
   );
