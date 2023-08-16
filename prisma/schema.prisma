@@ -13,14 +13,14 @@ model Master {
 }
 
 model Daily {
-  id    String        @id 
+  id    String     @id
   items ListItem[]
 }
 
 model ListItem {
-  id      Int    @id @default(autoincrement())
+  id      Int     @id @default(autoincrement())
   name    String
   amount  String
   dailyId String?
-  Daily   Daily? @relation(fields: [dailyId], references: [id])
+  Daily   Daily?  @relation(fields: [dailyId], references: [id])
 }

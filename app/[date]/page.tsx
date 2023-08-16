@@ -3,6 +3,7 @@ import { format } from "date-fns";
 import { PrismaClient } from "@prisma/client";
 import MasterListItemComp from "@/components/MasterListItemComp";
 import MasterListAddItemComp from "@/components/MasterListAddItemComp";
+import ListItemComp from "@/components/ListItemComp";
 
 type Props = { params: { date: string } };
 
@@ -37,7 +38,7 @@ async function page({ params }: Props) {
 
   const daily = await getDaily();
   const master = await getMaster();
-  console.log(daily)
+  console.log(daily);
 
   function formatDateString(date: string) {
     const decodedString = decodeURIComponent(date);
@@ -52,13 +53,10 @@ async function page({ params }: Props) {
       <div className="text-2xl">Order for: {date}</div>
       <section>
         <div>Current Order:</div>
-        <div>
+        <div className="flex flex-col">
           {daily.map((item, i) => {
             return (
-              <div key={i}>
-                <div>{item.name}</div>
-                <div>{item.amount}</div>
-              </div>
+              <ListItemComp key={i} name={item.name} amount={item.amount} />
             );
           })}
         </div>
