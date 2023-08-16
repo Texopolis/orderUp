@@ -18,7 +18,7 @@ model Daily {
 }
 
 model ListItem {
-  id      Int     @id @default(autoincrement())
+  id      String     @id @default(uuid())
   name    String
   amount  String
   dailyId String?
