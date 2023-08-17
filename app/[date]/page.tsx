@@ -39,7 +39,7 @@ async function page({ params }: Props) {
 
   const daily = await getDaily();
   const master = await getMaster();
-  console.log(daily);
+  console.log(daily?.items);
 
   function formatDateString(date: string) {
     const decodedString = decodeURIComponent(date);
@@ -52,16 +52,26 @@ async function page({ params }: Props) {
   return (
     <div className="flex h-full flex-col justify-between p-6">
       <div className="text-2xl">Order for: {date}</div>
-      <section>
-        <div>Current Order:</div>
-        <div className="flex flex-col">
-          {daily?.items.map((item, i) => {
-            return (
-              <ListItemComp key={i} name={item.name} amount={item.amount} />
-            );
-          })}
-        </div>
-      </section>
+      {daily?.items.length == 0 ||daily==null ? (
+          <div>No order started</div>
+        ) : (
+          <section>
+            <div className="flex flex-col">
+              {daily?.items.map((item) => {
+                return (
+                  <ListItemComp
+                    key={item.id}
+                    name={item.name}
+                    amount={item.amount}
+                    id={item.id}
+                  />
+                );
+              })}
+            </div>
+          </section>
+        )
+     
+      }
       <section className="justify-center text-center align-middle">
         <div className="text-2xl text-blue-400">Currently Used Items</div>
         <div className="grid grid-cols-4 gap-2">

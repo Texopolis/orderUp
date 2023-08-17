@@ -13,6 +13,7 @@ import {
 import { Label } from "./ui/label";
 import { Input } from "./ui/input";
 import { useRouter } from "next/navigation";
+import { set } from "date-fns";
 
 type Props = { name: string; date: string };
 
@@ -25,10 +26,11 @@ function MasterListItemComp({ name, date }: Props) {
     try {
       const res = await fetch("/api/addItemToOrder", {
         method: "POST",
-        body: JSON.stringify({ date:date, name: name, amount: amount }),
+        body: JSON.stringify({ date: date, name: name, amount: amount }),
       });
       if (res.status == 200) {
         setOpen(false);
+        setAmount("");
         router.refresh();
       }
     } catch (error) {
@@ -39,7 +41,7 @@ function MasterListItemComp({ name, date }: Props) {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger>
-        <Button>{name}</Button>
+        <Button className="w-20">{name}</Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
@@ -64,7 +66,7 @@ function MasterListItemComp({ name, date }: Props) {
           </div>
         </div>
         <DialogFooter>
-          <Button type="submit" onClick={handleSubmit}>
+          <Button type="submit" onClick={handleSubmit} disabled={amount == ""}>
             Save changes
           </Button>
         </DialogFooter>

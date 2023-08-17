@@ -20,7 +20,7 @@ function page() {
         </Link>
         <DatePickerComp />
       </div>
-      <div>Today is: {format(today, "PPP")}</div>
+      <div className="mb-8 ml-4">Today is: {format(today, "PPP")}</div>
     </div>
   );
 }

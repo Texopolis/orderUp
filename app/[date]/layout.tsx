@@ -13,5 +13,5 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  return <div className="h-screen">{children}</div>;
+  return <div className="h-screen pb-8">{children}</div>;
 }
