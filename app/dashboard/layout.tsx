@@ -17,13 +17,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className="dark">
-      <body className={rubik.className}>
-        <div className="flex flex-col h-screen">
-          <MenuBarComp />
-          {children}
-        </div>
-      </body>
-    </html>
+    <div className="flex h-screen flex-col">
+      <MenuBarComp />
+      {children}
+    </div>
   );
 }
