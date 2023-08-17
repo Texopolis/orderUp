@@ -45,7 +45,7 @@ function MasterListItemComp({ name, date }: Props) {
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle>Add item to order</DialogTitle>
+          <DialogTitle>{`Add ${name} to order`}</DialogTitle>
           <DialogDescription>
             Add this item to today&apos;s order
           </DialogDescription>
